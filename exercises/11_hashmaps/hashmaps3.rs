@@ -20,6 +20,7 @@
 use std::collections::HashMap;
 
 // A structure to store the goal details of a team.
+#[derive(Debug)]
 struct Team {
     goals_scored: u8,
     goals_conceded: u8,
@@ -42,13 +43,23 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // team_1.
         // scores.insert(team_1_name, Team {goals_scored: team_1_score, goals_conceded: team_2_score});
         // scores.insert(team_2_name, Team {goals_scored: team_2_score, goals_conceded: team_1_score});
-        let team1 = scores.entry(team_1_name).or_insert(Team {goals_scored: team_1_score, goals_conceded: team_2_score});
+        // let team1 = scores.entry(team_1_name).or_insert(Team {goals_scored: team_1_score, goals_conceded: team_2_score});
+        // team1.goals_scored += team_1_score;
+        // team1.goals_conceded += team_2_score;
+        // let team2 = scores.entry(team_2_name).or_insert(Team {goals_scored: team_2_score, goals_conceded: team_1_score});
+        // team2.goals_scored += team_2_score;
+        // team2.goals_conceded += team_1_score;
+
+        let team1 = scores.entry(team_1_name.clone()).or_insert(Team {goals_scored: team_1_score, goals_conceded: team_2_score});
         team1.goals_scored += team_1_score;
         team1.goals_conceded += team_2_score;
-        let team2 = scores.entry(team_2_name).or_insert(Team {goals_scored: team_2_score, goals_conceded: team_1_score});
+        println!("{} - {:?}", team_1_name, team1);
+        let team2 = scores.entry(team_2_name.clone()).or_insert(Team {goals_scored: team_2_score, goals_conceded: team_1_score});
         team2.goals_scored += team_2_score;
         team2.goals_conceded += team_1_score;
+        println!("{} - {:?}", team_2_name, team2);
     }
+
     scores
 }
 
